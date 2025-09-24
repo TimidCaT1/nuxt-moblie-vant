@@ -14,9 +14,12 @@ export default defineNuxtConfig({
     'pinia-plugin-persistedstate/nuxt',
   ],
 
+  spaLoadingTemplate: './spa-loading-template.html',
   runtimeConfig: {
+    // 服务端可见
+    databaseUrl: process.env.NUXT_DATABASE_URL,
     public: {
-      apiBase: process.env.NUXT_PUBLIC_API_BASE,
+      apiBase: process.env.NUXT_PUBLIC_API_BASE || '/api',
     },
   },
 

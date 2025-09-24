@@ -36,11 +36,7 @@ const languageValues = ref<string[]>([i18n.locale.value])
 const { locales } = useI18n() as { locales: ComputedRef<LocaleObject[]> }
 
 const menus = computed(() => [
-  { title: t('menu.unocssExample'), route: 'unocss' },
-  { title: t('menu.keepAlive'), route: 'keepalive' },
-  { title: t('menu.persistPiniaState'), route: 'counter' },
-  { title: t('menu.fetch'), route: 'prose' },
-  { title: t('menu.404Demo'), route: 'unknown' },
+  { title: t('menu.User'), route: 'user' },
 ])
 
 function onLanguageConfirm(event: { selectedOptions: PickerColumn }) {

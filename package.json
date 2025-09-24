@@ -19,6 +19,7 @@
     "release": "bumpp --commit --push --tag"
   },
   "dependencies": {
+    "@neondatabase/serverless": "^1.0.1",
     "@nuxtjs/color-mode": "^3.5.2",
     "@nuxtjs/i18n": "^10.1.0",
     "nuxt": "^4.1.2",
