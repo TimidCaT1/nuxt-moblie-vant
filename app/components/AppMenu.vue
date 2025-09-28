@@ -76,6 +76,7 @@ function onLanguageConfirm(event: { selectedOptions: PickerColumn }) {
       <template v-for="item in menus" :key="item.route">
         <VanCell :title="item.title" :to="item.route" is-link />
       </template>
+      <VanCell :title="$t('menu.logout')" is-link @click="() => $router.push('/logout')" />
     </VanCellGroup>
 
     <van-popup v-model:show="showLanguagePicker" position="bottom">

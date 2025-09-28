@@ -21,7 +21,8 @@
     "keepAlive": "🧡 KeepAlive Demo",
     "persistPiniaState": "💾 Persist Pinia State",
     "fetch": "🏄 Network Request",
-    "User": "Users"
+    "User": "Users",
+    "logout": "logout"
   },
   "unocss_page": {
     "hello": "Hello {0}",

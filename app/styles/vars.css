@@ -2,14 +2,14 @@
   --c-primary: rgb(var(--c-primary-500));
   --c-primary-active: rgb(var(--c-primary-600));
 
-  /* main color ratio */
-  --c-primary-100: 217 251 232;
-  --c-primary-200: 179 245 209;
-  --c-primary-300: 117 237 174;
-  --c-primary-400: 0 220 130;
-  --c-primary-500: 0 193 106;
-  --c-primary-600: 0 161 85;
-  --c-primary-700: 0 127 69;
-  --c-primary-800: 1 101 56;
-  --c-primary-900: 10 83 49;
+  /* main color ratio - Orange Brown */
+  --c-primary-100: 255 235 210; /* 浅，接近米白橙 */
+  --c-primary-200: 255 215 170; /* 较浅，柔和米橙 */
+  --c-primary-300: 255 188 97; /* 你给的亮橙，作为中浅色 */
+  --c-primary-400: 236 160 80; /* 更接近主题的橙色 */
+  --c-primary-500: 219 134 69; /* 主色，橙棕 */
+  --c-primary-600: 196 118 61; /* 稍深，hover 时适合 */
+  --c-primary-700: 175 107 55; /* 你给的深棕橙，作为重点色 */
+  --c-primary-800: 139 79 41; /* 更深，适合边框/强调 */
+  --c-primary-900: 102 58 30; /* 最深，接近咖啡棕 */
 }

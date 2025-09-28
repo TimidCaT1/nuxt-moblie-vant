@@ -8,6 +8,12 @@ useHead({
 })
 
 const color = useColorMode()
+const auth = useAuth()
+
+// 初始化用户状态
+onMounted(() => {
+  auth.restoreUser()
+})
 
 const mode = computed(() => {
   return color.value as ConfigProviderTheme

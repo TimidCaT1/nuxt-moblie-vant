@@ -21,7 +21,8 @@
     "keepAlive": "🧡 KeepAlive 演示",
     "persistPiniaState": "💾 持久化 Pinia 状态",
     "fetch": "🏄 网络请求",
-    "User": "用户"
+    "User": "用户",
+    "logout": "退出登录"
   },
   "unocss_page": {
     "hello": "你好 {0}",
