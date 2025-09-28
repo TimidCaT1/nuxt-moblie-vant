@@ -8,11 +8,19 @@ useHead({
 })
 
 const color = useColorMode()
-const auth = useAuth()
+// const auth = useAuth()
 
 // 初始化用户状态
 onMounted(() => {
-  auth.restoreUser()
+  if (!sessionStorage.getItem('firstOpen')) {
+    console.log('这是本次启动的第一次打开')
+    sessionStorage.setItem('firstOpen', 'true')
+    // 👉 在这里做你的“初次启动逻辑”
+    // 先加载页面
+  }
+  else {
+    console.log('已经打开过了')
+  }
 })
 
 const mode = computed(() => {
@@ -26,9 +34,12 @@ const keepAliveRouteNames = computed(() => {
 
 <template>
   <VanConfigProvider :theme="mode">
-    <NuxtLoadingIndicator />
-    <NuxtLayout>
-      <NuxtPage :keepalive="{ include: keepAliveRouteNames }" />
-    </NuxtLayout>
+    <!-- <NuxtLoadingIndicator /> -->
+
+    <div>
+      <NuxtLayout>
+        <NuxtPage :keepalive="{ include: keepAliveRouteNames }" />
+      </NuxtLayout>
+    </div>
   </VanConfigProvider>
 </template>

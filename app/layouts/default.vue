@@ -1,3 +1,7 @@
+<script lang="ts" setup>
+
+</script>
+
 <template>
   <main class="flex flex-col min-h-svh">
     <AppHeader class="app-header-bg" />

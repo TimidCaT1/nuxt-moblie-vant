@@ -40,6 +40,7 @@ export function useAuth() {
             Authorization: `Bearer ${token.value}`,
           },
         })
+        console.log(`token恢复用户信息     data: ${data}`)
         user.value = data.value?.user || null
       }
       catch (error) {

@@ -46,6 +46,7 @@ const showLeftArrow = computed(() => {
 })
 function showRightFunc() {
   showRight.value = true
+  console.log('showRightFunc')
   console.log(title)
 }
 
@@ -66,7 +67,7 @@ function handleShowRightFalse() {
     </div>
 
     <!-- 右侧弹出 -->
-    <van-popup v-model:show="showRight" position="right" :style="{ width: '60%', height: '100%' }">
+    <van-popup v-model:show="showRight" position="right" :style="{ width: '80%', height: '100%' }">
       <appMenu @show="handleShowRightFalse" />
     </van-popup>
   </div>

@@ -3,7 +3,7 @@ import { showFailToast, showSuccessToast } from 'vant'
 import { ref } from 'vue'
 
 definePageMeta({
-  name: 'Login',
+
 })
 
 // 表单数据
