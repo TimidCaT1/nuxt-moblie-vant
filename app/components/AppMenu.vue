@@ -4,12 +4,9 @@ import type { PickerColumn } from 'vant'
 import type { ComputedRef } from 'vue'
 import { Locale } from 'vant'
 
-const { $median } = useNuxtApp()
+const emit = defineEmits(['show'])
 
-definePageMeta({
-  layout: 'default',
-  name: 'Home',
-})
+const { $median } = useNuxtApp()
 
 function changeStatusBar(color: 'auto' | 'light' | 'dark') {
   $median.screen.setMode({ mode: color })
@@ -55,6 +52,10 @@ function onLanguageConfirm(event: { selectedOptions: PickerColumn }) {
 
   showLanguagePicker.value = false
 }
+
+function onPageButtonDown() {
+  emit('show')
+}
 </script>
 
 <template>
@@ -74,7 +75,7 @@ function onLanguageConfirm(event: { selectedOptions: PickerColumn }) {
       />
 
       <template v-for="item in menus" :key="item.route">
-        <VanCell :title="item.title" :to="item.route" is-link />
+        <VanCell :title="item.title" :to="item.route" is-link @click="onPageButtonDown()" />
       </template>
       <VanCell :title="$t('menu.logout')" is-link @click="() => $router.push('/logout')" />
     </VanCellGroup>
