@@ -46,6 +46,7 @@ const showLeftArrow = computed(() => {
 })
 function showRightFunc() {
   showRight.value = true
+  console.log(title)
 }
 
 function handleShowRightFalse() {
@@ -56,14 +57,29 @@ function handleShowRightFalse() {
 
 <template>
   <div class="app-header">
-    <van-nav-bar :title="title" clickable placeholder fixed :left-arrow="!showLeftArrow" @click-left="onBack">
-      <template #right>
-        <van-icon v-if="showRightIcon" name="qr" size="24" @click="showRightFunc" />
-      </template>
-    </van-nav-bar>
+    <div class="container">
+      <van-nav-bar clickable placeholder fixed :left-arrow="!showLeftArrow" @click-left="onBack">
+        <template #right>
+          <van-icon v-if="showRightIcon" name="qr" size="24" @click="showRightFunc" />
+        </template>
+      </van-nav-bar>
+    </div>
+
     <!-- 右侧弹出 -->
     <van-popup v-model:show="showRight" position="right" :style="{ width: '60%', height: '100%' }">
       <appMenu @show="handleShowRightFalse" />
     </van-popup>
   </div>
 </template>
+
+<style scoped>
+/* .container {} */
+
+:deep(.van-nav-bar) {
+  background: var(--van-background);
+}
+
+:deep(.van-nav-bar--fixed) {
+  margin-top: 8vw;
+}
+</style>
