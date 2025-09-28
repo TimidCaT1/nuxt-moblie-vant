@@ -15,12 +15,24 @@ export default defineNuxtConfig({
   ],
 
   spaLoadingTemplate: './spa-loading-template.html',
+  // 服务端可见
   runtimeConfig: {
-    // 服务端可见
-    databaseUrl: process.env.NUXT_DATABASE_URL,
+    // 私有键，仅服务端可用
+    DATABASE_HOST: process.env.DATABASE_HOST,
+    DATABASE_PORT: process.env.DATABASE_PORT,
+    DATABASE_USER: process.env.DATABASE_USER,
+    DATABASE_PASSWORD: process.env.DATABASE_PASSWORD,
+    DATABASE_NAME: process.env.DATABASE_NAME,
+    // 公共键，也可暴露给客户端，但数据库信息不应暴露给客户端
     public: {
+      // 公共配置
       apiBase: process.env.NUXT_PUBLIC_API_BASE || '/api',
     },
+  },
+
+  // 确保环境变量文件被加载
+  sourcemap: {
+    server: true,
   },
 
   css: [

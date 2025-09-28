@@ -1,19 +1,28 @@
-// server/api/users/index.get.ts
 export default defineEventHandler(async (_event) => {
   try {
-    const neon = useNeon()
-    const users = await neon.getUsers()
+    const connection = await createDBConnection()
+
+    // 示例查询
+    const [users] = await connection.execute(`
+      SELECT id, name, email 
+      FROM users 
+      LIMIT 10
+    `)
+
+    await connection.end()
 
     return {
       status: 'success',
       data: users,
-      count: users.length,
+      count: Array.isArray(users) ? users.length : 0,
     }
   }
   catch (error: any) {
+    console.error('用户查询失败:', error)
+
     throw createError({
       statusCode: 500,
-      statusMessage: error.message || '获取用户列表失败',
+      statusMessage: `数据库查询失败: ${error.message}`,
     })
   }
 })

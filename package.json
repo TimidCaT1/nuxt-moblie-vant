@@ -23,6 +23,7 @@
     "@nuxtjs/color-mode": "^3.5.2",
     "@nuxtjs/i18n": "^10.1.0",
     "median-js-bridge": "^2.11.0",
+    "mysql2": "^3.15.1",
     "nuxt": "^4.1.2",
     "pinia-plugin-persistedstate": "^4.5.0",
     "vue": "^3.5.21",
