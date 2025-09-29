@@ -30,7 +30,7 @@ export default defineEventHandler(async (event) => {
       })
     }
 
-    return { user: users[0] }
+    return { status: 'success', user: users[0] }
   }
   catch (error: any) {
     throw createError({

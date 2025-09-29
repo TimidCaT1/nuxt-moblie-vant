@@ -28,3 +28,14 @@ const show = computed(() => {
     </van-tabbar-item>
   </van-tabbar>
 </template>
+
+<style scoped>
+:deep(.van-tabbar) {
+  background: var(-c--primary);
+}
+
+:deep(.van-tabbar-item--active) {
+  color: var(--van-tabbar-item-active-background);
+  background: var(--van-tabbar-item-active-color);
+}
+</style>

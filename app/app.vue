@@ -2,25 +2,29 @@
 import type { ConfigProviderTheme } from 'vant'
 import useKeepalive from '~/composables/keepalive'
 import { appName } from '~/constants'
+import { useAuthStore } from '~/stores/auth'
 
 useHead({
   title: appName,
 })
 
+const authStore = useAuthStore()
 const color = useColorMode()
-// const auth = useAuth()
+const route = useRoute()
 
-// 初始化用户状态
+// 监听路由变化
+watch(() => route.path, (newPath, oldPath) => {
+  console.log('路由变化:', { 从: oldPath, 到: newPath, 登录状态: authStore.isLoggedIn })
+})
+
+// 监听用户登录状态变化
+watch(() => authStore.isLoggedIn, (newStatus) => {
+  console.log('用户登录状态变化:', newStatus)
+})
+
+// 初始化时恢复用户
 onMounted(() => {
-  if (!sessionStorage.getItem('firstOpen')) {
-    console.log('这是本次启动的第一次打开')
-    sessionStorage.setItem('firstOpen', 'true')
-    // 👉 在这里做你的“初次启动逻辑”
-    // 先加载页面
-  }
-  else {
-    console.log('已经打开过了')
-  }
+  authStore.restoreUser()
 })
 
 const mode = computed(() => {
@@ -34,12 +38,8 @@ const keepAliveRouteNames = computed(() => {
 
 <template>
   <VanConfigProvider :theme="mode">
-    <!-- <NuxtLoadingIndicator /> -->
-
-    <div>
-      <NuxtLayout>
-        <NuxtPage :keepalive="{ include: keepAliveRouteNames }" />
-      </NuxtLayout>
-    </div>
+    <NuxtLayout>
+      <NuxtPage :keepalive="{ include: keepAliveRouteNames }" />
+    </NuxtLayout>
   </VanConfigProvider>
 </template>

@@ -1,9 +1,18 @@
 <script setup lang="ts">
-import { showFailToast, showSuccessToast } from 'vant'
+import { showSuccessToast } from 'vant'
 import { ref } from 'vue'
 
-definePageMeta({
+const route = useRoute()
+const authStore = useAuthStore()
 
+definePageMeta({
+  layout: 'guest',
+  name: 'Login',
+})
+
+console.log('登录页面加载状态 (Pinia):', {
+  路径: route.path,
+  登录状态: authStore.isLoggedIn,
 })
 
 // 表单数据
@@ -17,33 +26,17 @@ const loading = ref(false)
 // 提交登录
 async function onSubmit(values: any) {
   loading.value = true
+  console.log('提交登录:', values.username)
+
   try {
-    const { data } = await useFetch('/api/auth/login', {
-      method: 'POST',
-      body: values,
-    })
-
-    console.log(data.value?.token)
-    if (data.value?.status !== 'success') {
-      console.log('登录失败')
-      showFailToast(data.value?.message || '登录失败')
-      return
-    }
-
-    // 这里可以存储token，然后跳转到首页
-    if (data.value?.status === 'success' && data.value?.token) {
-      console.log('登录成功，存储token:', data.value?.token)
-      localStorage.setItem('token', data.value?.token)
-    }
-    else {
-      localStorage.setItem('token', '')
-    }
-    // 登录成功
-    showSuccessToast('登录成功')
+    await authStore.login(values.username, values.password)
+    console.log('登录成功')
+    // 登录成功后，路由守卫会自动处理跳转
     navigateTo('/')
   }
-  catch (err) {
-    showFailToast(`登录失败,errMessage: ${err}`)
+  catch (error: any) {
+    console.error('登录失败:', error)
+    showSuccessToast(error.message || '登录失败')
   }
   finally {
     loading.value = false
