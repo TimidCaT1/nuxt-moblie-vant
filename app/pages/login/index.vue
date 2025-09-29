@@ -59,6 +59,8 @@ function forgotPassword() {
 
 <template>
   <div class="login-page">
+    <!-- 进入动画 -->
+    <!-- <div class="login-intro-wrapper" /> -->
     <div class="login-header">
       <h1>欢迎回来</h1>
       <p>请登录您的账户</p>
@@ -90,6 +92,16 @@ function forgotPassword() {
 </template>
 
 <style scoped>
+.login-intro-wrapper {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: linear-gradient(0deg, #db8645 0%, #db8645 50%, #f7f8fa 100%);
+  background-size: cover;
+}
+
 .login-page {
   min-height: 100vh;
   display: flex;

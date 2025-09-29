@@ -13,6 +13,9 @@ function changeStatusBar(color: 'auto' | 'light' | 'dark') {
 }
 
 const color = useColorMode()
+const authStore = useAuthStore()
+
+const user = authStore.user
 
 useHead({
   meta: [{
@@ -61,7 +64,15 @@ function onPageButtonDown() {
 <template>
   <div>
     <div class="app-avatar-bg flex items-center justify-between">
-      this is user Icon and title
+      <div class="app-avatar">
+        <VanImage width="25vw" height="25vw" radius="50%" fit="cover" src="/avatar2.jpg" alt="Avatar" />
+        <div class="app-avatar-name">
+          <span>{{ user?.username }}</span>
+        </div>
+        <div class="app-avatar-email">
+          <span>{{ user?.email }}</span>
+        </div>
+      </div>
     </div>
     <div class="app-menu">
       <VanCellGroup inset>
@@ -94,18 +105,70 @@ function onPageButtonDown() {
   </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 .app-avatar-bg {
   height: 34vw;
   width: 100%;
-  background-color: var(--c-primary);
+  background-color: #f7f8fa;
 }
 
 .app-menu {
-  padding-top: 12vw;
+  padding-top: 20vw;
   width: 100%;
   height: calc(100vh - 34vw);
-  background-color: rgb(var(--c-primary-300));
+  background-color: var(--c-primary);
+  border-radius: 15px 15px 0 0;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px -2px 12px;
   z-index: 1000;
+}
+
+.app-menu::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: 0;
+  width: 100%;
+  height: 10px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.25), transparent);
+  border-radius: 15px 15px 0 0;
+}
+
+:deep(.van-cell-group--inset) {
+  margin: 0vw 3vw;
+  border-radius: var(--van-cell-group-inset-radius);
+  overflow: hidden;
+}
+
+.app-avatar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px auto;
+  .app-avatar-name {
+    position: absolute;
+    top: 22vw;
+    left: 35vw;
+    font-size: 6vw;
+    color: #db8645;
+    font-weight: bold;
+    text-shadow: 0 2px 4px rgba(76, 102, 110, 0.5);
+  }
+  .app-avatar-email {
+    position: absolute;
+    top: 35vw;
+    left: 35vw;
+    font-size: 4vw;
+    color: #ffffffc5;
+    font-weight: 500;
+    text-shadow: 0 2px 4px rgba(76, 102, 110, 0.5);
+  }
+}
+
+.app-avatar .van-image {
+  position: relative;
+  right: 20vw;
+  top: 15vw;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25); /* 阴影 */
+  border-radius: 50%; /* 保证完全圆形 */
 }
 </style>

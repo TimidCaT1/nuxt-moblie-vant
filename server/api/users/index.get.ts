@@ -4,7 +4,7 @@ export default defineEventHandler(async (_event) => {
 
     // 示例查询
     const [users] = await connection.execute(`
-      SELECT id, name, email 
+      SELECT id, username, email 
       FROM users 
       LIMIT 10
     `)
