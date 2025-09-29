@@ -1,7 +1,7 @@
 import process from 'node:process'
 import jwt from 'jsonwebtoken'
 
-const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key'
+const JWT_SECRET = process.env.SECRET_KEY || 'your-secret-key'
 
 export interface JWTPayload {
   userId: number
@@ -10,9 +10,9 @@ export interface JWTPayload {
   exp?: number
 }
 
-export function generateJWTToken(payload: Omit<JWTPayload, 'iat' | 'exp'>): string {
+export function generateJWTToken(payload: { userId: number, username: string }) {
   return jwt.sign(payload, JWT_SECRET, {
-    expiresIn: '7d', // token 7天后过期
+    expiresIn: '2h', // 过期时间2小时，可按需调整
   })
 }
 

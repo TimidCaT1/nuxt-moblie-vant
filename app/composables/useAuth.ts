@@ -29,18 +29,20 @@ interface LoginResponse {
 export function useAuth() {
   const user = ref<User | null>(null)
   const isLoggedIn = computed(() => !!user.value)
-  const token = useCookie('token')
+  const token = ref<string | null>(import.meta.client ? localStorage.getItem('token') : null)
 
+  console.log('useAuth初始化', { isLoggedIn: isLoggedIn.value, user: user.value, token: token.value })
   // 从token恢复用户信息
   const restoreUser = async () => {
     if (token.value && !user.value) {
       try {
+        console.log(`token存在且用户信息为空，尝试恢复用户信息     token: ${token.value} `)
         const { data } = await useFetch<LoginResponse>('/api/auth/me', {
           headers: {
             Authorization: `Bearer ${token.value}`,
           },
         })
-        console.log(`token恢复用户信息     data: ${data}`)
+        console.log(`token恢复用户信息     data: ${data.value}`)
         user.value = data.value?.user || null
       }
       catch (error) {
@@ -50,6 +52,17 @@ export function useAuth() {
       }
     }
   }
+
+  watch(token, (val) => {
+    if (!import.meta.client)
+      return
+    if (val) {
+      localStorage.setItem('token', val)
+    }
+    else {
+      localStorage.removeItem('token')
+    }
+  })
 
   // 登录
   const login = async (credentials: LoginCredentials) => {
@@ -62,7 +75,7 @@ export function useAuth() {
       throw new Error(error.value.data?.message || '登录失败')
     }
 
-    token.value = data.value?.token
+    token.value = (data.value?.token as string) || null
     user.value = data.value?.user || null
 
     return data.value

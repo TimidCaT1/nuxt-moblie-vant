@@ -1,3 +1,8 @@
+import process from 'node:process'
+import jwt from 'jsonwebtoken'
+
+const JWT_SECRET = process.env.SECRET_KEY || 'your-secret-key'
+
 export default defineEventHandler(async (event) => {
   const token = getHeader(event, 'authorization')?.replace('Bearer ', '')
 
@@ -9,15 +14,13 @@ export default defineEventHandler(async (event) => {
   }
 
   try {
-    // 验证token（这里需要实现token验证逻辑）
-    const userId = verifyToken(token)
+    const payload = verifyToken(token)
 
     const connection = await createDBConnection()
     const [users] = await connection.execute(
       'SELECT id, username, email, avatar, phone, created_at FROM users WHERE id = ?',
-      [userId],
+      [payload.userId],
     )
-
     await connection.end()
 
     if (!Array.isArray(users) || users.length === 0) {
@@ -27,25 +30,22 @@ export default defineEventHandler(async (event) => {
       })
     }
 
-    return {
-      user: users[0],
-    }
+    return { user: users[0] }
   }
   catch (error: any) {
     throw createError({
       statusCode: 401,
-      statusMessage: `认证失败 ${error}`,
+      statusMessage: `认证失败: ${error.message || error}`,
     })
   }
 })
 
 // 简单的token验证（实际应该使用JWT）
-function verifyToken(token: string): number {
-  // 这里应该实现真正的token验证逻辑
-  // 现在只是简单解析
-  const match = token.match(/token_(\d+)_/)
-  if (!match) {
-    throw new Error('无效的token')
+export function verifyToken(token: string): { userId: number, username: string } {
+  try {
+    return jwt.verify(token, JWT_SECRET) as { userId: number, username: string }
   }
-  return Number.parseInt(match[1])
+  catch (err) {
+    throw new Error('无效的token' + `${err}`)
+  }
 }

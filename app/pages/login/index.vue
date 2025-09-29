@@ -18,21 +18,29 @@ const loading = ref(false)
 async function onSubmit(values: any) {
   loading.value = true
   try {
-    const { error } = await useFetch('/api/login', {
+    const { data } = await useFetch('/api/auth/login', {
       method: 'POST',
       body: values,
     })
 
-    if (error.value) {
-      showFailToast(error.value.data?.message || '登录失败')
+    console.log(data.value?.token)
+    if (data.value?.status !== 'success') {
+      console.log('登录失败')
+      showFailToast(data.value?.message || '登录失败')
       return
     }
 
+    // 这里可以存储token，然后跳转到首页
+    if (data.value?.status === 'success' && data.value?.token) {
+      console.log('登录成功，存储token:', data.value?.token)
+      localStorage.setItem('token', data.value?.token)
+    }
+    else {
+      localStorage.setItem('token', '')
+    }
     // 登录成功
     showSuccessToast('登录成功')
-    // 这里可以存储token，然后跳转到首页
-    // 例如：useUserStore().setToken(data.value.token)
-    await navigateTo('/')
+    navigateTo('/')
   }
   catch (err) {
     showFailToast(`登录失败,errMessage: ${err}`)
@@ -45,7 +53,8 @@ async function onSubmit(values: any) {
 // 跳转到注册页面
 function goToRegister() {
   // 假设注册页面是/register
-  navigateTo('/register')
+  console.log('goToRegister')
+  navigateTo('/login/register')
 }
 
 // 忘记密码
@@ -89,7 +98,6 @@ function forgotPassword() {
 
 <style scoped>
 .login-page {
-  padding: 20px;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
