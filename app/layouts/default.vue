@@ -13,9 +13,3 @@
     <AppFooter />
   </main>
 </template>
-
-<style scoped>
-.app-header-bg {
-  margin-top: 8vw;
-}
-</style>

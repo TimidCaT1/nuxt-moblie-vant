@@ -79,8 +79,4 @@ function handleShowRightFalse() {
 :deep(.van-nav-bar) {
   background: var(--van-background);
 }
-
-:deep(.van-nav-bar--fixed) {
-  margin-top: 8vw;
-}
 </style>
